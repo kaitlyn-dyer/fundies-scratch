@@ -16,4 +16,9 @@ rotate(-45, rectangle(100, 20, "solid", "red"))
 
 ##Create a Stop sign. text, regular-polygon, and other functions you've already seen may be helpful
 
-overlay(text("STOP", 20, "white"), overlay(regular-polygon(35, 8, "solid", "red"), overlay(regular-polygon(40, 8, "solid", "white"), regular-polygon(41, 8, "outline", "black"))))
+overlay(text("STOP", 30, "white"), overlay(regular-polygon(35, 8, "solid", "red"), overlay(regular-polygon(40, 8, "solid", "white"), regular-polygon(41, 8, "outline", "black"))))
+
+
+##create and image of your choice
+
+overlay(circle(10, "solid", "red"), overlay(circle(30, "solid", "white"), circle(50, "solid", "red")))
