@@ -98,6 +98,8 @@ overlay-align("center", "middle", above(circle(15, "solid", "red"), above(circle
 above(overlay-align("center", "middle", above(circle(15, "solid", "red"), above(circle(15, "solid", "yellow"), circle(15, "solid", "green"))), rectangle(40, 100, "solid", "black")) ,rectangle(15, 60, "solid", "black"))
 
 
+
+
 #### 4.  Broken Code Hunt
 
 ##Goal: Identify type mismatches or wrong arguments.
@@ -106,7 +108,47 @@ above(overlay-align("center", "middle", above(circle(15, "solid", "red"), above(
 
 # Goal: A rectangle with width 50 and height 20, solid black
 ##rectangle(50, "solid", 20, "black")
+rectangle(50, 20, "solid", "black")
+##You have to start with the dimensions. There is a specific order.
+
+
+
 ###Hint: Check the order and types of arguments that rectangle expects.
 
+
 ##circle(30, solid, "red")
+circle(30, "solid", "red")
+#You have to add the "" to the the text "solid. This tells the program that that string is representing the style rather than a variable.
+
 ##Hint: The second argument must be a string ("solid" or "outline").
+
+
+
+
+###### 5.  Create a Flag or Shield
+
+## Flag:
+
+##flag 1:
+overlay(overlay(regular-polygon(38, 8, "solid", "red"), circle(60, "solid", "yellow")), rectangle(200, 130, "solid", "dark blue"))
+
+
+##flag 2:
+overlay-align("center", "middle", beside(overlay(triangle(30, "solid", "pink"), triangle(55, "solid", "red")), beside(overlay(circle(20, "solid", "red"), circle(30, "solid", "pink")), rotate(180, overlay(triangle(30, "solid", "pink"), triangle(55, "solid", "red"))))), overlay(rectangle(185, 115, "solid", "blue"), rectangle(200, 130, "solid", "light blue")))
+
+
+
+###Shield Variation:
+
+#begin patterned flag
+overlay-align("center", "middle", overlay-align("center", "middle", 
+    
+    ##Pattern: RED
+    above(rotate(45, square(40, "solid", "red")), rotate(45, square(40, "solid", "red"))), 
+    
+    ###Pattern: BLUE
+    beside(rotate(45, square(40, "solid", "blue")), rotate(45, square(40, "solid", "blue")))), 
+  
+  ##Shield BACKGROUND
+  rotate(45, square(100, "solid", "gray")))
+
