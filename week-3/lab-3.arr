@@ -49,25 +49,67 @@ fun rock-paper-scissors(
   doc: "determines the winner of rock-paper-scissors"
   ask:
       ## ROCK & SCISSORS
-    | rock-paper-scissors("rock", "scissors") then: "player 1 is the winner"
-    | rock-paper-scissors("scissors", "rock") then: "player 2 is the winner"
+    | (player1 == "rock") and (player2 == "scissors") then: "player 1"
+    | (player1 == "scissors") and (player2 == "rock") then: "player 2"
       # SCISSORS & PAPER
-    | rock-paper-scissors("scissors", "paper") then: "player 1 is the winner"
-    | rock-paper-scissors("paper", "scissors") then: "player 2 is the winner"
+    | (player1 == "scissors") and (player2 == "paper") then: "player 1"
+    | (player1 == "paper") and (player2 == "scissors") then: "player 2"
       ##PAPER & ROCK
-    | rock-paper-scissors("paper", "rock") then: "player 1 is the winner"
-    | rock-paper-scissors("rock", "paper") then: "player 2 is the winner"
+    | (player1 == "paper") and (player2 == "rock") then: "player 1"
+    | (player1 == "rock") and (player2 == "paper") then: "player 2"
       # TIE
-    | rock-paper-scissors("rock", "rock") then: "tie"
-    | rock-paper-scissors("scissors", "scissors") then: "tie"
-    | rock-paper-scissors("paper", "paper") then: "tie"
+    | player1 == player2 then: "tie"
       # ELSE
     | otherwise: "invalid choice"
   end
 where:
-  rock-paper-scissors("rock, rock") is "tie"
-  rock-paper-scissors("paper", "rock") is "player 1 is the winner"
-  rock-paper-scissors("scissors", "rock") is "player 2 is the winner"
-  rock-paper-scissors("apple", "rock") is "invaild choice"
+  rock-paper-scissors("rock", "rock") is "tie"
+  rock-paper-scissors("paper", "rock") is "player 1"
+  rock-paper-scissors("scissors", "rock") is "player 2"
+  rock-paper-scissors("apple", "rock") is "invalid choice"
 end
-  
+
+
+
+# PROBLEM 4
+## Define a table called planets and the insert the information about planetary distances from the Sun in astronomical units. Ensure that you create a table with type annotations.
+
+planets-table = table: Planet :: String, Distance :: Number
+    row: "Mercury", 0.39
+    row: "Venus", 0.72
+    row: "Earth", 1
+    row: "Mars", 1.52
+    row: "Jupiter", 5.2
+    row: "Saturn", 9.54
+    row: "Uranus", 19.2
+    row: "Neptune", 30.06
+  end
+planets-table
+
+
+mars = planets-table.row-n(3)
+mars
+mars["Distance"]
+
+
+## PROBLEM 5
+#Upload the above CSV file (extract the CSV file from the .zip file first) inside VS Code in GitHub
+
+#Load the file in Pyret and assign it to a variable named something.
+
+something = load-table:
+  year :: Number,
+  day :: Number, 
+  month :: String,
+  rate :: Number
+  source: csv-table-file("boe_rates.csv", default-options)
+
+##Use the sanitizer to convert the columns with numeric data into numbers
+
+##Check the total number of rows inside the table using Pyret
+
+##Find the median rate in the dataset
+
+##Find the mode for the rate
+
+##Order the rate column in both ascending and descending order to find the maximum and minimum values
