@@ -1,4 +1,4 @@
-use context starter2024
+use context dcic2024
 include csv
 include data-source
 
@@ -125,11 +125,17 @@ num-rows-something
 ##Find the median rate in the dataset
 
 
-
+median(something, "rate")
 
 ##Find the mode for the rate
 
-
+modes(something, "rate")
 
 
 ##Order the rate column in both ascending and descending order to find the maximum and minimum values
+
+ascending-order = something.increasing-by("rate")
+ascending-order
+
+descending-order = something.decreasing-by("rate")
+descending-order
