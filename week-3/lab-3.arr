@@ -1,4 +1,7 @@
 use context starter2024
+include csv
+include data-source
+
 
 # PROBLEM 1
 # Design a function to determine if a given year is a leap year. The function should return true if the year is a leap year, otherwise false.
@@ -97,19 +100,36 @@ mars["Distance"]
 
 #Load the file in Pyret and assign it to a variable named something.
 
+##Use the sanitizer to convert the columns with numeric data into numbers
+
+
 something = load-table:
   year :: Number,
   day :: Number, 
   month :: String,
   rate :: Number
   source: csv-table-file("boe_rates.csv", default-options)
+  sanitize year using num-sanitizer
+  sanitize day using num-sanitizer
+  sanitize rate using num-sanitizer
+end
 
-##Use the sanitizer to convert the columns with numeric data into numbers
+
+
 
 ##Check the total number of rows inside the table using Pyret
 
+num-rows-something = something.length()
+num-rows-something
+
 ##Find the median rate in the dataset
 
+
+
+
 ##Find the mode for the rate
+
+
+
 
 ##Order the rate column in both ascending and descending order to find the maximum and minimum values
