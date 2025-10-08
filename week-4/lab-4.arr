@@ -87,4 +87,52 @@ longest-morn-delay = order-by(long-morn-delayed, "dep_delay", false)
 
 longest-morn-delay.row-n(0)
 
-  
+## EXERCISE 3: Clean Delays + compute Effective Speed
+# Clean negative depature and arrival delays
+cleaning = transform-column(flights, "dep_delay", lam(val): if val < 0: 0 else: val end end)
+
+clean_delays = transform-column(cleaning, "arr_delay", lam(v): if v < 0: 0 else: v end end)
+clean_delays
+
+# Create effective speed column mph
+
+flights-speed = build-column(clean_delays, "effective_speed", lam(s): if s["air_time"] > 0: s["distance"] / (s["air_time"] / 60) else: 0 end end)
+
+desc-flights-speed = order-by(flights-speed, "effective_speed", false)
+desc-flights-speed
+
+desc-flights-speed.row-n(0)
+
+
+## EXERCISE 4: Discount Late Arrivals and On-Time Score
+fun apply-arrival-discount(t :: Table) -> Table:
+  doc: "Reduces arr_delay by 20% when 0 <= arr_delay <= 45"
+  transform-column(t, "arr_delay", lam(val): if (val >= 0) and (val <= 45): val * 0.8 else: val end end)
+end
+
+discounted-flights = apply-arrival-discount(flights)
+
+discounted-flights
+
+# Add new column with scoing idea
+
+scored-flights = build-column(
+  clean_delays, 
+  "on_time_score", 
+  lam(row): 
+  score = 100 - (row["dep_delay"] - row["arr_delay"]) - (row["air_time"] / 30) 
+  if score < 0: 
+      0 
+  else: 
+      score
+    end
+  end)
+
+best-flights = order-by(scored-flights, "on_time_score", false)
+
+best-flights-tied = order-by(best-flights, "distance", true)
+
+best-flights-tied
+
+best-flights-tied.row-n(0)
+best-flights-tied.row-n(1)
