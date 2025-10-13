@@ -94,7 +94,31 @@ group(dedup_table, "dedup_key")
 
 
 
-## DO TASK 3
+# TASK 3: Normalising Categorical Values
+# Create a new "airline" column
+fun carrier-airline(str :: String) -> String:
+  doc: "function to change carrier to airline"
+  normal-car = string-to-upper(trim(str))
+  ask:
+    | normal-car == "UA" then: "United Airlines"
+    | normal-car == "AA" then: "American Airlines"
+    | normal-car == "B6" then: "JetBlue"
+    | normal-car == "DL" then: "Delta Air Lines"
+    | normal-car == "EV" then: "ExpressJet"
+    | normal-car == "WN" then: "Southwest Airlines"
+    | normal-car == "00" then: "SkyWest Airlines"
+    | otherwise: "Other"
+  end
+end
+
+airline-flights = build-column(flights_sample53, "airline", lam(r): carrier-airline(r["carrier"]) end)
+    
+airline-flights
+# Detect and filter outliers in distance and air_time
+detect- outliers = filter-with(flights_sample53, lam(r): (r["air_time"] < 500) and (r["distance"] > 5000)end)
+detect-outliers
+## This shows that there are no outliers that follow these parameters
+
 
 
 # TASK 4: Visualisation & for each Loop
@@ -107,6 +131,7 @@ list-dis = flights_sample53.get-column("distance")
 
 # Total distance flown
 fun total-dis(num-list :: List<Number>) -> Number block:
+  doc: "find the total of a list with numbers"
   var total = 0
   for each(n from num-list):
     total := total + n
@@ -117,6 +142,35 @@ end
 total-dis(list-dis)
 
 # Average distance
+fun average-dis(num-list :: List<Number>) -> Number block:
+  doc: "find the average of a list with numbers"
+  var total = 0
+  for each(n from num-list):
+    total := total + (n / length(num-list))
+  end
+  total
+end
+
+average-dis(list-dis)
+
+# Maximum Distance
+fun find-max(num-list :: List<Number>) -> Number block:
+  doc: "find the maximum value fro a list of numbers"
+  var max-so-far = 0
+  for each(n from num-list):
+    if n > max-so-far:
+      max-so-far := n
+    else:
+      max-so-far
+    end
+  end
+  max-so-far
+end
+  
+find-max(list-dis)
+ 
+  
+     
 
 
 
