@@ -2,6 +2,119 @@ use context dcic2024
 include csv
 include data-source
 
+
+flights = load-table:
+  rownames :: Number,
+  dep_time :: Number,
+  sched_dep_time :: Number,
+  dep_delay :: Number,
+  arr_time :: Number,
+  sched_arr_time :: Number,
+  arr_delay :: Number,
+  carrier :: String,
+  flight :: Number,
+  tailnum :: String,
+  origin :: String,
+  dest :: String, 
+  air_time :: Number,
+  distance :: Number,
+  hour :: Number,
+  minute :: Number,
+  time_hour :: String
+  source: csv-table-file("flights.csv", default-options)
+  sanitize rownames using num-sanitizer
+  sanitize dep_time using num-sanitizer  
+  sanitize sched_dep_time using num-sanitizer
+  sanitize dep_delay using num-sanitizer
+  sanitize arr_time using num-sanitizer
+  sanitize sched_arr_time using num-sanitizer
+  sanitize arr_delay using num-sanitizer
+  sanitize flight using num-sanitizer
+  sanitize air_time using num-sanitizer
+  sanitize distance using num-sanitizer
+  sanitize hour using num-sanitizer
+  sanitize minute using num-sanitizer
+end
+
+fun is_long_flight(row :: Row) -> Boolean:
+  doc: "determines if the flight is long"
+  row["distance"] >= 1500
+end
+
+flights
+
+#PROBLEM 1
+
+## Long flights 
+long_flights = filter-with(flights, is_long_flight)
+
+long_flights
+
+## Longest flights
+longest_flight = order-by(long_flights, "air_time", false)
+
+# Longest flight
+longest_flight.row-n(0)
+
+
+#### PROBLEM 2
+# We want to find flights that were delayed by at least 30 minutes, scheduled to depart in the morning, and then identify the worst offender.
+
+fun is_delayed_departure(row :: Row) -> Boolean:
+  doc: "checks if the depature is delayed by at least 30 min"
+  row["dep_delay"] >= 30
+end
+
+
+
+fun is_morning_sched_dep(row :: Row) -> Boolean:
+  doc: "checks if the scheduled depature time is before noon"
+  row["sched_dep_time"] < 1200
+end
+
+
+## Find delayed flights before noon
+delayed_flights = filter-with(flights, is_delayed_departure)
+
+
+morning_delayed = filter-with(delayed_flights, is_morning_sched_dep)
+
+# lambda delayed morning flights
+
+delay = filter-with(flights, lam(r :: Row): r["dep_delay"] >= 30 end)
+
+morning_delay = filter-with(delay, lam(d :: Row): d["sched_dep_time"] < 1200 end)
+
+morning_delay
+
+# filter again to keep only flights where distance > 500.
+
+long_morning_delay = filter-with(morning_delay, lam(l :: Row): l["distance"] > 500 end)
+
+long_morning_delay
+
+## Order by dep_delay descending (worst delays first).
+
+worst_delay = order-by(flights, "dep_delay", false)
+worst_delay
+
+worst_delay.row-n(0)
+
+## PROBLEM 3
+
+## Some flights have negative delays (meaning they left early). Replace those with 0.
+no_dep_delay = transform-column(flights, "dep_delay", lam(r): if r < 0: 0 else: r end end)
+
+no_delay = transform-column(no_dep_delay, "arr_delay", lam(s): if s < 0: 0 else: s end end)
+
+no_delay
+
+
+## Add a new column "effective_speed" in miles per hour:
+
+effective_flights = build-column(flights, "effective_speed", lam(r :: Row): if r["air_time"] < 0: 0 else: r["distance"] / (r["air_time"] / 60) end end)
+
+
 flights = load-table:
   rownames :: Number,
   dep_time :: Number,
@@ -136,3 +249,4 @@ best-flights-tied
 
 best-flights-tied.row-n(0)
 best-flights-tied.row-n(1)
+

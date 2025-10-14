@@ -115,7 +115,7 @@ airline-flights = build-column(flights_sample53, "airline", lam(r): carrier-airl
     
 airline-flights
 # Detect and filter outliers in distance and air_time
-detect- outliers = filter-with(flights_sample53, lam(r): (r["air_time"] < 500) and (r["distance"] > 5000)end)
+detect-outliers = filter-with(flights_sample53, lam(r): (r["air_time"] < 500) and (r["distance"] > 5000)end)
 detect-outliers
 ## This shows that there are no outliers that follow these parameters
 
