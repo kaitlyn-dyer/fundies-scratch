@@ -47,6 +47,10 @@ long-gentoo
 fem-chinstrap = filter-with(penguins, lam(r): (r["species"] == "Chinstrap") and (r["sex"] == "female") end)
 mean(fem-chinstrap, "flipper_length_mm")
 
+box-plot(fem-chinstrap, "flipper_length_mm")
+
 male-chinstrap = filter-with(penguins, lam(r): (r["species"] == "Chinstrap") and (r["sex"] == "male") end)
 mean(male-chinstrap, "flipper_length_mm")
+
+box-plot(male-chinstrap, "flipper_length_mm")
  
