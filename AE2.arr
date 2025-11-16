@@ -26,7 +26,6 @@ penguins
 # 1. SCALAR PROCESSING QUESTION
 # What are the flipper lengths of all Adelie penguins observed on Torgersen Island? Extract the longest flipper length.
 adelie-torgersen = filter-with(penguins, lam(r): (r["species"] == "Adelie") and (r["island"] == "Torgersen") end)
-adelie-torgersen
 
 longest-flipper = order-by(adelie-torgersen, "flipper_length_mm", false)
 longest-flipper
@@ -35,11 +34,13 @@ longest-flipper.row-n(0)
 
 # 2. TRANSFORMATION QUESTION
 # Change every penguin's body mass from grams to kilograms and create a new column names body_mass_kg
-build-column(penguins, "body_mass_kg", lam(r): (r["body_mass_g"] / 1000) end)
+penguins-kg = build-column(penguins, "body_mass_kg", lam(r): (r["body_mass_g"] / 1000) end)
+penguins-kg
 
 # 3. SELECTION QUESTION
-# Which Gentoo penguins have a bill length greater than 50 mm?
-
+# Which Gentoo penguins have a bill length greater than 55 mm?
+long-gentoo = filter-with(penguins, lam(r): (r["species"] == "Gentoo") and (r["bill_length_mm"] > 55) end)
+long-gentoo
 
 # 4. ACCUMULATION QUESTION
 # What is the average flipper length of female vs. male Chinstrap penguins?
@@ -48,8 +49,4 @@ mean(fem-chinstrap, "flipper_length_mm")
 
 male-chinstrap = filter-with(penguins, lam(r): (r["species"] == "Chinstrap") and (r["sex"] == "male") end)
 mean(male-chinstrap, "flipper_length_mm")
-
-
-
-
  
