@@ -20,7 +20,7 @@ penguins = load-table:
   sanitize body_mass_g using num-sanitizer
   sanitize year using num-sanitizer
 end
-penguins
+
 
 
 # 1. SCALAR PROCESSING QUESTION
@@ -33,7 +33,7 @@ longest-flipper
 longest-flipper.row-n(0)
 
 # 2. TRANSFORMATION QUESTION
-# Change every penguin's body mass from grams to kilograms and create a new column names body_mass_kg
+# Change every penguin's body mass from grams to kilograms and create a new column named body_mass_kg
 penguins-kg = build-column(penguins, "body_mass_kg", lam(r): (r["body_mass_g"] / 1000) end)
 penguins-kg
 
