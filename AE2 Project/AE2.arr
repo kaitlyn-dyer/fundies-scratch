@@ -61,7 +61,6 @@ adelie-flip-small = [list:
   adelie.row-n(10)["body_mass_g"],
   adelie.row-n(11)["body_mass_g"],
   adelie.row-n(12)["body_mass_g"]]
-adelie-flip-small
 
 # 1. SCALAR PROCESSING QUESTION
 # What is the longest flipper length?
@@ -104,7 +103,7 @@ end
 # 3. SELECTION QUESTION
 # What are the bill lengths that are greater than a given number? 
 fun long_bills(l :: List<Number>, x :: Number) -> List<Number>:
-  doc: "takes a list of bill lengths and produces a list containiing only bill lengths greater than 55 mm"
+  doc: "takes a list of bill lengths and produces a list containiing only bill lengths greater than x mm"
   cases (List) l:
     | empty => empty
     | link(f, r) => 
@@ -122,7 +121,7 @@ end
 
 
 # 4. ACCUMULATION QUESTION
-# What is the average flipper length rounded to the neared integer?
+# What is the average flipper length rounded to the nearest integer?
 fun avg_flipper(l :: List<Number>) -> Number:
   doc: "takes a list of flipper lengths and returns the average"
   if my-len(l) == 0:
@@ -132,7 +131,6 @@ fun avg_flipper(l :: List<Number>) -> Number:
   end
 where:
   avg_flipper(flipper-length) is 201
-  avg_flipper(small-flippers) is 189
   avg_flipper(adelie-flip) is 190
   avg_flipper(chinstrap-flip) is 196
   avg_flipper(gentoo-flip) is 217
