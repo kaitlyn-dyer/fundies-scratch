@@ -57,7 +57,6 @@ chinstrap-flip = chinstrap.get-column("flipper_length_mm")
 gentoo-flip = gentoo.get-column("flipper_length_mm")
 
 
-
 adelie-flip-small = [list:
   adelie.row-n(10)["body_mass_g"],
   adelie.row-n(11)["body_mass_g"],
@@ -78,12 +77,13 @@ fun longest_flipper(l :: List<Number>) -> Number:
   end
 where:
   longest_flipper(flipper-length) is 231
-  longest_flipper(small-flippers) is 195
   longest_flipper(adelie-flip) is 210
+  longest_flipper(chinstrap-flip) is 212
+  longest_flipper(gentoo-flip) is 231
 end
 
 # 2. TRANSFORMATION QUESTION
-# Convert the body mass from grams to kilograms.
+# What are the penguins body masses in kilograms?
 fun body_mass_kg(l :: List<Number>) -> List<Number>:
   doc: "converts a list in grams to kilograms"
   cases (List) l:
@@ -93,6 +93,12 @@ fun body_mass_kg(l :: List<Number>) -> List<Number>:
 where:
   body_mass_kg(small-mass) is [list: 3.75, 3.8, 3.25, 3.45, 3.65]
   body_mass_kg(adelie-flip-small) is [list: 3.7, 3.45, 4.5]
+  body_mass_kg([list: 3750, 3800, 3250, 3450, 3650]) is link(3750 / 1000, body_mass_kg([list: 3800, 3250, 3450, 3650]))
+  body_mass_kg([list: 3800, 3250, 3450, 3650]) is link(3800 / 1000, body_mass_kg([list: 3250, 3450, 3650]))
+  body_mass_kg([list: 3250, 3450, 3650]) is link(3250 / 1000, body_mass_kg([list: 3450, 3650]))
+  body_mass_kg([list: 3450, 3650]) is link(3450 / 1000, body_mass_kg([list: 3650]))
+  body_mass_kg([list: 3650]) is link(3650 / 1000, body_mass_kg([list: ]))
+  body_mass_kg([list: ]) is empty
 end
 
 # 3. SELECTION QUESTION
