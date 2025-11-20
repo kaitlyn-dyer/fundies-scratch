@@ -155,7 +155,11 @@ fun my-len(l :: List<Number>) -> Number:
   end
 end
 
+box-plot(adelie, "flipper_length_mm")
 
+box-plot(chinstrap, "flipper_length_mm")
+
+box-plot(gentoo, "flipper_length_mm")
 
   
       
